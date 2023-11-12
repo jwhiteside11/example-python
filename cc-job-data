@@ -19,22 +19,19 @@ def arrange_data():
         # print("Next contact length:", len_ctc)
 
         j = 0
-        k = 0
         # iterate over contact
         while j < len_ctc and i + j < len(data):
             if '@' in data[i + j]:
-                while k < 2:
+                while len(temp) < 2:
                     temp.append("")
-                    k += 1
 
             if 'Source:' in data[i + j]:
-                while k < 3:
+                while len(temp) < 3:
                     temp.append("")
-                    k += 1
 
             temp.append(data[i + j])
             j += 1
-            k += 1
+
         # fill up unused contact cells
         while len(temp) < 4:
             temp.append("")
