@@ -1,0 +1,70 @@
+#
+# Replace data array, then run the following:
+#   result = arrange_data()
+#   print(result)
+
+
+data = ["Thomas Jefferson", "President", "tom@ff.com", "Source: LinkedIn", "Jeff Bezos", "Founder/CEO", "jeff@amazon.com", "Source: NYT", "Jeff Bezos", "jeff@amazon.com", "Source: NYT", "Jeff Bezos", "Founder/CEO", "Source: NYT", "Thomas Jefferson", "President", "tom@ff.com"]
+
+
+def arrange_data():
+    res = []
+    temp = []
+
+    i = 0
+    # iterate over entire dataset
+    while i < len(data):
+        # find # of cells occupied by a contact
+        len_ctc = next_contact_size(i)
+        # print("Next contact length:", len_ctc)
+
+        j = 0
+        k = 0
+        # iterate over contact
+        while j < len_ctc and i + j < len(data):
+            if '@' in data[i + j]:
+                while k < 2:
+                    temp.append("")
+                    k += 1
+
+            if 'Source:' in data[i + j]:
+                while k < 3:
+                    temp.append("")
+                    k += 1
+
+            temp.append(data[i + j])
+            j += 1
+            k += 1
+        # fill up unused contact cells
+        while len(temp) < 4:
+            temp.append("")
+
+        # add to result, reset temporary array
+        res.append(temp)
+        temp = []
+        # increment to next contact
+        i += len_ctc
+
+    return res
+
+
+def next_contact_size(i_start):
+    # assume first cell is a name
+    k = i_start + 1
+    # Run first filter
+    if k < len(data) and '@' in data[k]:
+        k += 1
+    # Run second filter
+    if k < len(data) and 'Source:' in data[k]:
+        k += 1
+    # Check if still on second cell; we conclude the second cell their job title
+    if k - i_start == 1:
+        k += 1
+    # Run first filter again
+    if k < len(data) and '@' in data[k]:
+        k += 1
+    # Run second filter again
+    if k < len(data) and 'Source:' in data[k]:
+        k += 1
+
+    return k - i_start
