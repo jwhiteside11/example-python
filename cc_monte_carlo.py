@@ -19,7 +19,7 @@ f_memo = [1, 1]
 
 def f(n):
     if n < len(f_memo):
-        a = f_memo[n]
+        return f_memo[n]
 
     a = f_memo[0]
 
