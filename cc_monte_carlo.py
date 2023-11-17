@@ -11,7 +11,7 @@ def monte_carlo(T, p_star, u, d, S_0, K, n):
                 S_i *= d
         C_i = S_i - K
         # print(C_i)
-        sum_C += C_i
+        sum_C += max(C_i, 0)
 
     return sum_C / n
 
@@ -44,8 +44,9 @@ def bsm(T, p_star, u, d, S_0, K):
         tCk = nCk(T, k)
         prob = (p_star ** k) * ((1 - p_star) ** (T - k))
         updown = (u ** k) * (d ** (T - k)) * S_0 - K
-        # print(tCk, prob, updown)
-        sum_term += tCk * prob * updown
+        C_Tk = tCk * prob * updown
+        # print(C_Tk)
+        sum_term += max(C_Tk, 0)
 
     return sum_term
 
@@ -64,13 +65,13 @@ def calc_ans():
     avg_1000 = monte_carlo(T_, p_star, u_, d_, S_0_, K_, 1000)
     avg_10000 = monte_carlo(T_, p_star, u_, d_, S_0_, K_, 10000)
 
-    ans_bsm = bsm(T_, p_star, u_, d_, S_0_, K_)
+    exact_price = bsm(T_, p_star, u_, d_, S_0_, K_)
 
     print("Monte-Carlo simulation:")
     print("n = 100:", avg_100)
     print("n = 1000:", avg_1000)
     print("n = 10000:", avg_10000)
-    print("Black-Scholes-Merton:", ans_bsm)
+    print("Black-Scholes-Merton:", exact_price)
 
 
 calc_ans()
