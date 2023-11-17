@@ -20,17 +20,15 @@ f_memo = [1, 1]
 
 
 def f(n):
-    if n < len(f_memo):
+    lf = len(f_memo)
+    if n < lf:
         return f_memo[n]
 
-    a = f_memo[0]
+    a = f_memo[lf-1]
 
-    for i in range(1, n+1):
-        if i < len(f_memo):
-            a = f_memo[i]
-        else:
-            a *= i
-            f_memo.append(a)
+    for i in range(lf, n+1):
+        a *= i
+        f_memo.append(a)
 
     return a
 
