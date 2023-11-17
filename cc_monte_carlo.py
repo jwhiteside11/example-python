@@ -1,3 +1,5 @@
+
+
 def monte_carlo(T, p_star, u, d, S_0, K, n):
     sum_C = 0
     for i in range(n):
@@ -40,10 +42,10 @@ def nCk(n, k):
 def bsm(T, p_star, u, d, S_0, K):
     sum_term = 0
 
-    for i in range(T+1):
-        tCk = nCk(T, i)
-        prob = (p_star ** i) * ((1 - p_star) ** (T - i))
-        updown = (u ** i) * (d ** (T - i)) * S_0 - K
+    for k in range(T+1):
+        tCk = nCk(T, k)
+        prob = (p_star ** k) * ((1 - p_star) ** (T - k))
+        updown = (u ** k) * (d ** (T - k)) * S_0 - K
         # print(tCk, prob, updown)
         sum_term += tCk * prob * updown
 
